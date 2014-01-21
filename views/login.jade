@@ -1,0 +1,31 @@
+extends layouts/main
+
+block body
+  .login
+    .intro
+      a(href='/')
+        h1 Clustter
+    form(action='/login' method='get')
+      //- h3 Sign in to Clustter
+      a.btn.btn-twitter(href='#') Sign in with 
+        i.ion-social-twitter
+        |  Twitter
+      fieldset
+        p
+          label.primary(for='username')
+            i.ion-person
+            |  Username
+          input(type='text' id='username' name='username' placeholder='Username or email')
+        p
+          label.primary(for='password')
+            i.ion-key
+            |  Password 
+            a(href='#') Lost?
+          input(type='password' id='password' name='password' placeholder='Password')
+        p
+          input(type='checkbox' name='remember' id='remember')
+          label(for='remember') Remember Me
+      button.btn.btn-success.invert(type='submit') Sign In
+    p.text_center.text_light New 'round here? &nbsp;
+        a.btn.btn-primary(href='#') Sign Up 
+          i.ion-person-stalker

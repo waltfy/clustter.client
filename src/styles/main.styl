@@ -1,0 +1,381 @@
+//===========================================
+//     _____ _           _   _            
+//    / ____| |         | | | |           
+//   | |    | |_   _ ___| |_| |_ ___ _ __ 
+//   | |    | | | | / __| __| __/ _ \ '__|
+//   | |____| | |_| \__ \ |_| ||  __/ |   
+//    \_____|_|\__,_|___/\__|\__\___|_|                                                                               
+//  
+//===========================================
+//  Styles Index
+//===================
+// 0. Imports
+// 1. Functions
+// 2. Colors
+// 3. Typography
+// 4. Tags
+// 5. Application
+// 6. Media Queries
+// 7. Animations
+
+//====================
+// 0. Imports
+//====================
+@import "../fonts/ionicons/css/ionicons.css"
+
+//====================
+// 1. Functions
+//====================
+support-for-ie ?= true
+
+vendor(thing, value)
+  for vendor in vendors
+    if vendor == official
+      {thing} value
+    else
+      -{vendor}- {thing} value
+
+border-radius()
+  vendor(border-radius, arguments)
+
+transform()
+    vendor(transform, arguments)
+
+transition(what=all, time=200ms, easeing=ease)
+    vendor(transition, what time easeing)
+
+animation()
+    vendor(animation, arguments)
+
+opacity(n)
+  -khtml-opacity n
+  -moz-opacity n
+  opacity n
+  if support-for-ie
+    -ms-filter unquote('"progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')"')
+    filter unquote('alpha(opacity=' + round(n * 100) + ')')
+
+//====================
+// 2. Colors
+//====================
+$bg = #3e4651
+$bg_main = #f0f0f0
+$light = white
+
+$primary = #306eab
+$success = #77cc33  
+$warning = #ff9900
+$info = #00b5b5
+$danger = #f16233
+$twitter = hsl(210, 82%, 67%)
+
+//====================
+// 3. Typography
+//====================
+$sans = 'Open Sans', helvetica, arial, sans-serif
+$cons = 'Droid Serif', Georgia, serif
+$type_dark = #333
+
+* /* Optimises Typography */
+  vendor(box-sizing, border-box)
+  -webkit-font-smoothing antialiased
+  text-rendering optimizeLegibility
+
+//====================
+// 4. General Tags
+//====================
+
+html, body, menu
+  margin 0
+  padding 0
+
+h1, h2, h3, h4, h5, p
+  margin 0
+
+a
+  text-decoration none
+  color inherit
+  display inline-block
+
+fieldset, img
+  border none
+
+label
+  font-size 0.85em
+  &.primary
+    display block
+    padding-bottom 0.5em
+
+nav
+  ul
+    list-style-type none
+    padding 0
+    margin 0
+    &:last-child
+      padding-right 0em
+  li
+    list-style none
+    display inline-block
+    padding-right 0.8em
+    a
+      text-align center
+
+menu
+  @extends nav
+  li
+    float left
+    &:last-child
+      padding-right 0em
+
+p
+  line-height 1.6
+  margin  1.2em 0em
+  a
+    font-weight bold
+    border-bottom dotted 1px
+
+:last-child
+  margin-bottom 0
+
+body
+  background-color darken($bg, 50%)
+  font-family $sans
+  color $type_dark
+
+header, .content
+  width 100%
+
+header
+  height 3.3125em
+  padding 0.625em
+  z-index 100
+  overflow hidden
+  color $bg_main
+  position fixed
+  text-align center
+  background url('../images/logo.svg') no-repeat center center darken($bg, 50%)
+
+footer
+  width 100%
+  color $light
+  padding 2*.625em
+  text-align center
+  .ion-social-twitter
+    color $twitter
+
+/* feedback */
+.feedback
+  z-index 110
+  width 100%
+  position fixed
+  top 3.3125em
+  line-height 1.1
+  p
+    margin none
+    line-height 1
+    display inline
+  .icon
+    font-size 1em
+  padding .3125em 0.625em
+  display block
+
+.feedback.info
+    background lighten($info, 85%) 
+    color $info
+    border-bottom 1px solid $info
+
+.feedback.danger
+    background lighten($danger, 85%) 
+    color $danger
+    border-bottom 1px solid $danger
+
+.feedback.success
+    background lighten($success, 85%) 
+    color $success
+    border-bottom 1px solid $success
+
+.feedback.warning
+    background lighten($warning, 85%) 
+    color $warning
+    border-bottom 1px solid $warning
+
+.login
+  border-top 0.3em solid $danger
+  padding 2*.625em 2*0.625em
+  margin 0 auto
+  max-width 23em
+  .intro
+    background url('../images/logo.svg') no-repeat center top darken($bg, 50%)
+    color $light
+    text-align center
+    padding 4*0.625em 0.625em 0.625em
+  form
+    position relative
+    border 0.5em solid darken($bg, 10%)
+    border-radius (4px)
+    margin 0 auto
+    padding .625em
+    background $light
+    color $type_dark
+    fieldset
+      border-radius (8px)
+    button
+      position absolute
+      bottom .625em
+      right .625em
+
+.content
+  overflow scroll
+  position fixed
+  -webkit-overflow-scrolling touch
+  background-color $bg_main
+  z-index 0
+  position relative
+  padding-top 3.3125em
+  article
+    padding 0.625em
+
+.icon
+  font-size 2em
+
+.hide
+  display none
+
+.right
+  float right
+
+.left
+  float left
+
+/* input */
+input
+  border 1px solid #ccc
+  vendor(box-shadow, inset 0 0 3px hsla(0, 0%, 0%, 0.1))
+  font-family $sans
+  padding 0.4em 0.6em
+  font-size 1em
+  border-radius(3px)
+  -webkit-font-smoothing antialiased
+  text-rendering optimizeLegibility
+
+input[type='text']
+input[type='password']
+  width 100%
+
+input[type='checkbox']
+  margin-right 0.2em
+
+/* buttons */
+.btn
+  display inline-block
+  margin 0
+  border 0
+  padding 0.37em 0.7em
+  background-color $primary
+  color white
+  font-family $sans
+  font-size 1em
+  font-weight normal
+  line-height 1.75em
+  text-align center
+  text-transform uppercase
+  vertical-align middle
+  white-space nowrap
+  cursor pointer
+  vendor(user-select, none)
+  border-radius(.25em)
+  transition(all, .3s, ease-in-out)
+  i
+    font-size @font-size
+    margin-right 0.3125em
+  &:active
+    opacity(0.8)
+  
+.btn-success
+  background-color $success
+  &.invert
+    color @background-color
+    background-color transparent
+    padding 0.1em 0.7em
+    border 0.2em solid @color
+    &:hover
+      background-color @color
+      color white
+
+.btn-default
+  background-color $bg
+  color white
+  &.invert
+    color @background-color
+    background-color transparent
+    padding 0.1em 0.7em
+    border 0.2em solid @color
+    &:hover
+      background-color @color
+      color white
+
+.btn-white
+  background-color white
+  color $type_dark
+  &.invert
+    color @background-color
+    background-color transparent
+    padding 0.1em 0.7em
+    border 0.2em solid @color
+    &:hover
+      background-color @color
+      color $type_dark
+
+.btn-primary
+  background-color $primary
+  &.invert
+    color @background-color
+    background-color transparent
+    padding 0.1em 0.7em
+    border 0.2em solid @color
+    &:hover
+      background-color @color
+      color white
+
+.btn-twitter
+  width 100%
+  background-color $twitter
+  &.invert
+    color @background-color
+    background-color transparent
+    padding 0.1em 0.7em
+    border 0.2em solid @color
+    &:hover
+      background-color @color
+      color white
+
+.text_center
+  text-align center
+
+.text_light
+  color $light
+
+.text_no-margin
+  margin 0
+
+.text_warning
+  color $warning
+
+.text_danger
+  color $danger
+
+.text_success
+  color $success
+
+.alpha
+  color white
+  position fixed
+  padding 0.3em 2em
+  z-index 100000
+  top 11px
+  left -25px
+  background-color $warning
+  -webkit-transform: rotate(-45deg); 
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  // filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=5)

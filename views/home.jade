@@ -1,0 +1,60 @@
+extends layouts/main
+  
+block body
+  header
+    h1.hide Clustter
+    //- p.hide A customised, aggregated &amp; summarised news feed for you.
+    //- .sidebar
+    a(href='#nav').right
+      i.icon.ion-navicon
+      p.hide Menu
+      //- block sidebar
+  .content
+    .feedback.warning
+      i.icon.ion-ios7-information-outline
+      p  New stories available.
+      a(href='#', data-dismiss='feedback').right
+        i.icon.ion-close-circled
+    article
+      h2 Rigby killing 'cowardly'.
+      small
+        p Happened in London.
+      //- ul
+      //-   li "cowardly and callous" murder a jury hears 
+      //-   li graphic CCTV footage shown in court.
+      //-   li victim seen walking.
+    article
+      h2 Black Friday flurry for UK.
+      small
+        p Discounted prices in UK
+      //- ul
+      //-   li John Lewis also reported a spike in sales
+      //-   li Other best sellers for the company were tablets
+      //-   li There were also reports of scuffles inside the Asda
+    article 
+      h2 Possible 'cannibal' case.
+      small
+        p Policeman eats another man
+      //- ul
+      //-   li Germany cannibal case.
+      //-   li The dead man lived in Hanover and had been reported missing.
+      //-   li German media report that he is an expert in handwriting analysis.        
+    article 
+      h2 Wales loses to Australia.
+      small
+        p Rugby Union
+    article 
+      h2 Brazil to host World Cup
+      small
+        p Football
+    article 
+      h2 Another article.
+      small
+        p Another caption.
+    article 
+      h2 Yet another article.
+      small
+        p Yet another caption.
+
+block footer
+  include partials/nav
