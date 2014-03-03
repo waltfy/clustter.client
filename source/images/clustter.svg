@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1948px" height="2409px" viewBox="0 0 1948 2409" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>clustter</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Path-2-+-Rectangle-5-+-Rectangle-5" sketch:type="MSLayerGroup">
+            <path d="M1938.54398,1.38079679 L651,-0.015625 L0,643.070788 L6.83755042e-14,1758.85006 C6.83755042e-14,1758.85006 434.058899,2192.27539 651,2409 L1942,2406.40689 L1938.54398,1.38079679 Z" id="Path-2" fill="#384250" sketch:type="MSShapeGroup"></path>
+            <rect id="Rectangle-5" fill="#5C6D7E" sketch:type="MSShapeGroup" x="651" y="0" width="1296" height="2409"></rect>
+            <path d="M652.018005,1198 L1948,352 L1948,2048 L652.018005,1198 Z" id="Path-2" fill="#CE5C45" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

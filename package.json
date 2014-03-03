@@ -1,0 +1,33 @@
+{
+  "name": "clustter.client",
+  "version": "0.0.0",
+  "description": "Clustter\\'s Front-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/waltervascarvalho/clustter.client.git"
+  },
+  "keywords": [
+    "clustter",
+    "client",
+    "front-end"
+  ],
+  "author": "Walter Carvalho",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/waltervascarvalho/clustter.client/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-autoprefixer": "~0.7.2",
+    "grunt-contrib-stylus": "~0.13.2",
+    "grunt-react": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "matchdep": "~0.3.0",
+    "grunt-contrib-connect": "~0.7.1"
+  }
+}

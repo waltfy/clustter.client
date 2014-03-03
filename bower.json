@@ -1,0 +1,22 @@
+{
+  "name": "clustter.client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/waltervascarvalho/clustter.client",
+  "authors": [
+    "Walter Carvalho <waltervascarvalho@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "source/libraries",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "superagent": "~0.16.0",
+    "director": "~1.2.2"
+  }
+}

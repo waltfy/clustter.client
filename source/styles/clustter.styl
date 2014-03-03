@@ -1,0 +1,61 @@
+//  ______     __         __  __     ______     ______   ______   ______     ______     __     __   __    
+// /\  ___\   /\ \       /\ \/\ \   /\  ___\   /\__  _\ /\__  _\ /\  ___\   /\  == \   /\ \   /\ "-.\ \   
+// \ \ \____  \ \ \____  \ \ \_\ \  \ \___  \  \/_/\ \/ \/_/\ \/ \ \  __\   \ \  __<   \ \ \  \ \ \-.  \  
+//  \ \_____\  \ \_____\  \ \_____\  \/\_____\    \ \_\    \ \_\  \ \_____\  \ \_\ \_\  \ \_\  \ \_\\"\_\ 
+//   \/_____/   \/_____/   \/_____/   \/_____/     \/_/     \/_/   \/_____/   \/_/ /_/   \/_/   \/_/ \/_/ 
+//                                                                                                   
+//
+html, html a {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+$type_dark = #595959
+$type_ligth = lighten($type_dark, 30%)
+
+html, body, ul, ol
+  margin 0
+  padding 0
+
+h1, h2, h3, h4, h5, p
+  margin 0
+  font-weight normal
+
+body
+  color $type_dark
+  font-family 'Open Sans', helvetica, arial, sans-serif
+
+.app
+  position absolute
+  top 0
+  left 0
+  bottom 0
+  right 0
+  .app__topbar
+    position fixed
+    box-shadow 0px 2px 0px 0px rgba(50, 50, 50, 0.10)
+    z-index 500
+    top 0
+    left 0
+    right 0
+    background url('../images/clustter.svg') no-repeat center center white
+    background-size 1.4em
+    padding 3*0.625em
+    h1
+      font-size 2em
+  .app__content
+    z-index 0
+    background-color #ccc
+    position relative
+    top 3.75em
+    .app__content--feed
+      li
+        padding 0.625em
+    
+
+
+
