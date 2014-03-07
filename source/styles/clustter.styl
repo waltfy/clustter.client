@@ -1,21 +1,39 @@
-//  ______     __         __  __     ______     ______   ______   ______     ______     __     __   __    
-// /\  ___\   /\ \       /\ \/\ \   /\  ___\   /\__  _\ /\__  _\ /\  ___\   /\  == \   /\ \   /\ "-.\ \   
-// \ \ \____  \ \ \____  \ \ \_\ \  \ \___  \  \/_/\ \/ \/_/\ \/ \ \  __\   \ \  __<   \ \ \  \ \ \-.  \  
-//  \ \_____\  \ \_____\  \ \_____\  \/\_____\    \ \_\    \ \_\  \ \_____\  \ \_\ \_\  \ \_\  \ \_\\"\_\ 
-//   \/_____/   \/_____/   \/_____/   \/_____/     \/_/     \/_/   \/_____/   \/_/ /_/   \/_/   \/_/ \/_/ 
-//                                                                                                   
+//  ______     __         __  __     ______     ______   ______   ______     ______   
+// /\  ___\   /\ \       /\ \/\ \   /\  ___\   /\__  _\ /\__  _\ /\  ___\   /\  == \  
+// \ \ \____  \ \ \____  \ \ \_\ \  \ \___  \  \/_/\ \/ \/_/\ \/ \ \  __\   \ \  __<  
+//  \ \_____\  \ \_____\  \ \_____\  \/\_____\    \ \_\    \ \_\  \ \_____\  \ \_\ \_\
+//   \/_____/   \/_____/   \/_____/   \/_____/     \/_/     \/_/   \/_____/   \/_/ /_/
 //
-html, html a {
-  -webkit-font-smoothing: antialiased;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-}
 
-*, *:before, *:after {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
-}
+// typography
+$typeface = 'Open Sans', helvetica, arial, sans-serif
 
+// colors
 $type_dark = #595959
 $type_ligth = lighten($type_dark, 30%)
+
+$blue = #41b3d9
+$green = #2ecc40
+$yellow = #ffdc00
+$red = #ff4136
+$orange = #ff851b
+
+// styles
+html, html a
+  -ms-touch-action manipulation
+  touch-action manipulation
+  color inherit
+  text-decoration none
+  -webkit-font-smoothing antialiased
+  text-shadow 1px 1px 1px rgba(0,0,0,0.004)
+
+body
+  text-rendering optimizeLegibility
+  -webkit-touch-callout none
+  user-select none
+
+*, *:before, *:after
+  box-sizing border-box
 
 html, body, ul, ol
   margin 0
@@ -27,7 +45,7 @@ h1, h2, h3, h4, h5, p
 
 body
   color $type_dark
-  font-family 'Open Sans', helvetica, arial, sans-serif
+  font-family $typeface
 
 .app
   position absolute
@@ -35,27 +53,76 @@ body
   left 0
   bottom 0
   right 0
+  background-color #fafafa
+  .app__feedback
+    position fixed
+    color white
+    background-color $blue
+    box-shadow 0px 2px 0px 0px rgba(50, 50, 50, 0.10)
+    z-index 1000
+    top 0
+    left 0
+    right 0
+    height 3.75em
+    line-height @height
+    padding 0 1*0.625em
+    vertical-align middle
+    .fa
+      color darken(@background-color, 30%)
+      vertical-align middle
+      font-size 1.4em
   .app__topbar
     position fixed
+    color $type_ligth
     box-shadow 0px 2px 0px 0px rgba(50, 50, 50, 0.10)
-    z-index 500
+    z-index 200
     top 0
     left 0
     right 0
     background url('../images/clustter.svg') no-repeat center center white
     background-size 1.4em
-    padding 3*0.625em
+    padding 1.1875em
     h1
       font-size 2em
   .app__content
-    z-index 0
-    background-color #ccc
+    box-shadow 0px 4px 0px 0px rgba(50, 50, 50, 0.10)
+    background-color white
     position relative
     top 3.75em
     .app__content--feed
+      z-index 0
       li
+        background-color white
+        color $type_ligth
         padding 0.625em
-    
+        &.entertainment
+          border-left 0.4em solid $red
+        &.world
+          border-left 0.4em solid $green
+        &.business
+          border-left 0.4em solid $blue
+        h2
+          color $type_dark
+        small
+          text-transform uppercase
+          font-size 0.75em
+    .app__content--story
+      z-index 100
+      padding 0.625em
+      border-left 0.6em solid $blue
+  // footer
+  //   overflow scroll-x
+  //   padding 5*0.625em
+  //   text-transform uppercase
+  //   font-size 0.65em
+  //   color $type_ligth
+  //   text-align center
 
+.right
+  float right
 
+.left
+  float left
 
+.fa.fa-twitter
+  color #55acee
