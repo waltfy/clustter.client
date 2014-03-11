@@ -16,6 +16,23 @@ app.HOME = 'home';
 app.STORY = 'story';
 app.MENU = 'menu';
 
+var Menu = React.createClass({
+  render: function () {
+    var classes = React.addons.classSet({
+      'app__content--menu': true,
+      'animated': true,
+      'fadeIn': true
+    });
+
+    return (
+      <div className={classes}>
+        <h1>Menu</h1>
+        <p>Bullets</p>
+      </div>
+    );
+  }
+});
+
 var Feedback = React.createClass({
   getInitialState: function () {
     return {
@@ -54,11 +71,11 @@ var Story = React.createClass({
 
     return (
       <div className={classes}>
+        <small>07/03/2014</small>
         <h1>Story Title</h1>
-        <br/>
         <p>This is a dummy article. For now, because soon enough this will be dynamically filled in by sick news!</p>
-        <br/>
-        <small>REFERENCES</small>
+        <p>This could also be a bullet-point list of the same sentences.</p>
+        <small><i className='fa fa-anchor'></i> REFERENCES</small>
         <p>BBC</p>
         <p>Yahoo</p>
         <p>Guardian</p>
@@ -117,8 +134,9 @@ var Clustter = React.createClass({
     var setState = this.setState;
     var router = Router({
       '/': setState.bind(this, { nowShowing: app.HOME }),
-      '/story/:storyId': this.getStory,
-      '/menu': setState.bind(this, { nowShowing: app.HOME })
+      '/menu': setState.bind(this, { nowShowing: app.MENU }),
+      '/story/:storyId': this.getStory
+      
     });
     router.init('/');
   },
