@@ -1,0 +1,9 @@
+CACHE MANIFEST
+
+CACHE:
+index.html
+./styles/clustter.css
+./images/clustter.svg
+
+NETWORK:
+*

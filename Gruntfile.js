@@ -14,7 +14,13 @@ module.exports = function (grunt) {
     copy: {
       html: {
         cwd: 'source',
-        src: [ 'index.html'],
+        src: [ 'index.html', '*.manifest'],
+        dest: 'build',
+        expand: true
+      },
+      js: {
+        cwd: 'source',
+        src: ['js/**/*'],
         dest: 'build',
         expand: true
       },
@@ -55,6 +61,7 @@ module.exports = function (grunt) {
         ext: '.js'
       }
     },
+    
     watch: {
       styles: {
         files: './source/**/*.styl',
@@ -70,8 +77,15 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+      js: {
+        files: './source/**/*.js',
+        tasks: ['copy:js'],
+        options: {
+          livereload: true
+        }
+      },
       html: {
-        files: './source/**/*.html',
+        files: ['./source/**/*.html', './source/**/*.manifest'],
         tasks: ['copy:html'],
         options: {
           livereload: true
@@ -85,5 +99,5 @@ module.exports = function (grunt) {
  
   // define the tasks
   grunt.registerTask('stylesheets', 'compiles all styles and autoprefixes them', [ 'stylus', 'autoprefixer' ]);
-  grunt.registerTask('default', 'Building Clustter', [ 'copy', 'stylesheets', 'react', 'connect', 'watch' ]);
+  grunt.registerTask('default', 'Building Clustter', [ 'copy', /*'uglify',*/ 'stylesheets', 'react', 'connect', 'watch' ]);
 };

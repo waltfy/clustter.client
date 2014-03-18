@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="482px" height="588px" viewBox="0 0 482 588" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>LogoOnly</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="1024" sketch:type="MSArtboardGroup" transform="translate(-270.000000, -218.000000)">
+            <g id="Path-2-+-Rectangle-5-+-Rectangle-5" sketch:type="MSLayerGroup" transform="translate(290.000000, 238.000000)">
+                <path d="M442.211628,0.317656363 L148.50309,0 L0,146.28853 L1.55975017e-14,400.104667 C1.55975017e-14,400.104667 99.0154955,498.699744 148.50309,548 L443,547.410122 L442.211628,0.317656363 Z" id="Path-2" stroke="#F1F1F1" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="#4D6992" sketch:type="MSShapeGroup"></path>
+                <rect id="Rectangle-5" fill="#4E87D7" sketch:type="MSShapeGroup" x="149" y="0" width="295" height="548"></rect>
+                <path d="M219,274.5 L444,82 L444,467 L219,274.5 Z" id="Path-2" fill="#CBE0FF" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

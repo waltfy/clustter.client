@@ -6,9 +6,22 @@
 
 // if (navigator.standalone) document.body.className += 'touch';
 React.initializeTouchEvents(true);
-var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 
-// (function () {})();
+// function supportsLocalStorage () {
+//   try {
+//     return 'localStorage' in window && window['localStorage'] !== null;
+//   } catch (e) {
+//     return false;
+//   }
+// };
+
+// function saveStories (stories) {
+//   if (!supportsLocalStorage()) { return false; }
+//   console.log(stories);
+//   console.log('saving stories');
+//   localStorage["clustter.stories"] = JSON.stringify(stories);
+//   return true;
+// };
 
 var app = app || {};
 
@@ -16,45 +29,50 @@ app.HOME = 'home';
 app.STORY = 'story';
 app.MENU = 'menu';
 
+var Retry = React.createClass({
+  refresh: function () {
+    location.reload();
+  },
+  render: function () {
+    return (
+      <div className='app__content--retry' onClick={this.refresh}>
+        <h1><i className='fa fa-frown-o' /></h1>
+        <p>Click here to try again.</p>
+      </div>
+    );
+  }
+});
+
 var Menu = React.createClass({
   render: function () {
-    var classes = React.addons.classSet({
-      'app__content--menu': true,
-      'animated': true,
-      'fadeIn': true
-    });
-
     return (
-      <div className={classes}>
-        <h1>Menu</h1>
-        <p>Bullets</p>
+      <div className='app__content--menu animated fadeIn'>
+        <h2>Reading Mode</h2>
+        <p>Shows your stories in bullet points or 'continuous' text.</p>
+        <div className='toggle'>
+          <input type='checkbox' name="checkbox" id='chkbx' checked={this.props.bulleted} onChange={this.props.toggleBullet} />
+          <label htmlFor='chkbx'><b></b></label>
+        </div>
       </div>
     );
   }
 });
 
 var Feedback = React.createClass({
-  getInitialState: function () {
-    return {
-      visible: true
-    };
-  },
-  dismissFeedback: function (e) {
-    e.preventDefault();
-    this.setState({ visible: false });
-  },
   render: function () {
 
     var classes = React.addons.classSet({
       'app__feedback': true,
       'animated': true,
-      'fadeOutUpBig': !this.state.visible,
-      'fadeInDownBig': this.state.visible
+      'fadeOutUpBig': !this.props.visible,
+      'fadeInDownBig': this.props.visible,
     });
 
+    var message = this.props.message;
+
     return (
-      <div ref='feedback' className={classes}>
-        <p><i className='fa fa-info-circle'></i>&nbsp;Clustter info feedback test!<span onClick={this.dismissFeedback} onTouchEnd={this.dismissFeedback} className='right'><i className='fa fa-times-circle-o'></i></span></p>
+      <div ref='feedback' className={classes + ' ' + message.className}>
+        <p><i className={'fa ' + message.icon }></i>&nbsp;{message.text}<span onClick={this.props.dismiss} onTouchEnd={this.props.dismiss} className='right'><i className='fa fa-times'></i></span></p>
       </div>
     );
   }
@@ -63,22 +81,38 @@ var Feedback = React.createClass({
 var Story = React.createClass({
   render: function () {
 
-    var classes = React.addons.classSet({
-      'app__content--story': true,
-      'animated': true,
-      'fadeIn': true
-    });
+    var story = this.props.story;
 
+    var createSentence = function (sentence, index) {
+      if (this.props.bulleted)
+        return (<li key={index}>{sentence}</li>)
+      else
+        return (<p key={index}>{sentence}</p>);
+    }.bind(this);
+
+    var createRefs = function (ref, index) {
+      var link = document.createElement('a');
+      link.href = ref;
+      return (<p key={index}><a target='_blank' href={ref}>{link.hostname}</a></p>);
+    }.bind(this);
+    
     return (
-      <div className={classes}>
-        <small>07/03/2014</small>
-        <h1>Story Title</h1>
-        <p>This is a dummy article. For now, because soon enough this will be dynamically filled in by sick news!</p>
-        <p>This could also be a bullet-point list of the same sentences.</p>
-        <small><i className='fa fa-anchor'></i> REFERENCES</small>
-        <p>BBC</p>
-        <p>Yahoo</p>
-        <p>Guardian</p>
+      <div className='app__content--story animated fadeIn'>
+        <article>
+          <header className={story.category.split(' ')[0].toLowerCase()}>
+            <small>Clusttered on {moment(story.updated).format("L")}</small>
+            <h1>{story.title}</h1>
+          </header>
+          {story.content.map(createSentence)}
+        </article>
+        <div className='share'>
+          <p><i className='fa fa-twitter fa-2x'></i></p>
+          <h3>#getclustter</h3>
+        </div>
+        <div className='references'>
+          <p><small><i className='fa fa-anchor'></i> REFERENCES</small></p>
+          {story.refs.map(createRefs)}
+        </div>
       </div>
     );
   }
@@ -86,23 +120,11 @@ var Story = React.createClass({
 
 var StoryFeed = React.createClass({
   render: function () {
-    var stories = [
-      {id: 1, title: 'Bafta fellowship for Rockstar Games', category: 'entertainment', excerpt: "The makers of games including the Grand Theft Auto series will be presented with a Bafta fellowship at this year's British Academy Games Awards"},
-      {id: 2, title: "Russia 'demands Crimea surrender'", excerpt: "The Russian military has given Ukrainian forces in Crimea until 03:00 GMT on Tuesday to surrender or face an assault, Ukrainian defence sources say.", category: 'world'},
-      {id: 3, title: "MtGOX gives bankruptcy details", category:'world'},
-      {id: 4, title: "Twitter Booms in an unlikely buyout", category:'business'}
-    ];
-
-    var classes = React.addons.classSet({
-      'app__content--feed': true,
-      'animated': true,
-      'fadeIn': true
-    });
     
     var createStoryItem = function (item, index) {
       return (
-        <a key={item.id} href={'#/story/' + index}>
-          <li className={item.category}>
+        <a key={index} href={'#/story/' + index}>
+          <li className={item.category.split(' ')[0].toLowerCase()}>
             <small>{item.category}</small>
             <h2>{item.title}</h2>
           </li>
@@ -110,52 +132,89 @@ var StoryFeed = React.createClass({
       );
     }.bind(this);
 
-    return (
-      <div className={classes}>
-        <ul>
-          {stories.map(createStoryItem)}
-        </ul>
-      </div>
-    );
+    var stories = this.props.stories;
+    
+    if (stories.length === 0)
+      return <Retry />
+    else {
+      return (
+        <div className='app__content--feed animated fadeIn'>
+          <ul>{stories.map(createStoryItem)}</ul>
+        </div>
+      );
+    }
   }
 });
 
 var Clustter = React.createClass({
+  loadStories: function (cb) {
+    var stories = this.state.stories;
+    if (stories.length !== 0) { if (cb) cb(null, stories); return; } // if stories are already loaded there's no need to send another request
+    this.setState({ isLoading: true }); // set status to loading
+    superagent.get('http://10.152.76.206:3000/stories').timeout(3000).end(function (err, res) {
+      this.setState({ isLoading: false });
+      if (err) {
+        this.handleFeedback(new ClustterError('Could not load stories.'));
+      }
+      else {
+        this.handleFeedback(new ClustterInformation('Loaded latest stories.'));
+        this.setState({ stories: res.body.stories });
+        if (cb) cb(err, res.body.stories);
+      } 
+    }.bind(this));
+  },
   getInitialState: function () {
     return {
       nowShowing: app.HOME,
-      editing: null
+      isLoading: false,
+      isBulleted: true,
+      stories: [],
+      selectedStory: null,
+      showFeedback: false,
+      feedbackContent: {}
     };
-  },
-  getStory: function (storyId) {
-    this.setState({ nowShowing: app.STORY })
   },
   componentDidMount: function () {
     var setState = this.setState;
     var router = Router({
-      '/': setState.bind(this, { nowShowing: app.HOME }),
+      '/': [this.loadStories, setState.bind(this, { nowShowing: app.HOME })],
       '/menu': setState.bind(this, { nowShowing: app.MENU }),
       '/story/:storyId': this.getStory
-      
     });
     router.init('/');
   },
-  handleMenu: function (event) {
-    event.preventDefault();
-    console.log('should trigger menu');
+  getStory: function (id) {
+    id = parseInt(id);
+    this.loadStories(function (err, stories) {
+      this.setState({ selectedStory: stories[id], nowShowing: app.STORY });
+    }.bind(this));
+  },
+  toggleBullet: function (event) {
+    this.setState({ isBulleted: event.target.checked });
+  },
+  handleFeedback: function (message) {
+    // activates feedback bar with a ClustterMessage - message
+    setTimeout(this.dismissFeedback, 5000);
+    this.setState({ feedbackContent: message, showFeedback: true});
+  },
+  dismissFeedback: function () { // dismisses feedback bar
+    this.setState({ showFeedback: false }); 
   },
   render: function () {
     var getContent = function () {
       var nowShowing = this.state.nowShowing;
       switch (nowShowing) {
         case app.HOME:
-          return <StoryFeed />
+          return <StoryFeed stories={this.state.stories} />
           break;
         case app.STORY:
-          return <Story />
+          return <Story story={this.state.selectedStory} bulleted={this.state.isBulleted} />
+          break;
+        case app.MENU:
+          return <Menu toggleBullet={this.toggleBullet} bulleted={this.state.isBulleted} />
           break;
         default:
-          return <StoryFeed />
+          return <StoryFeed stories={this.state.stories} />
           break;
       }
     }.bind(this);
@@ -163,19 +222,16 @@ var Clustter = React.createClass({
       <div className='app'>
         <div className='app__overlay'></div>
         <div className='app__topbar'>
-          {(this.state.nowShowing !== app.HOME) ? <a href='#/' className='left'><i className='fa fa-chevron-left'></i></a> : ''}
-          <a href='#/menu' className='right'><i className='fa fa-bars'></i></a>
+          {(this.state.nowShowing !== app.HOME) ? <a href='javascript:history.back()' className='animated fadeIn left'>BACK</a> : ''}
+          <a href='#/menu' className='right'><i className='fa fa-cog'></i></a>
         </div>
         <div className='app__content'>
-          {getContent()}
+          { (this.state.isLoading) ? <div className='app__content--loading animated fadeIn'><i className="fa fa-spinner fa-spin"></i></div> : getContent() }
         </div>
-        <Feedback />
+        <Feedback message={this.state.feedbackContent} visible={this.state.showFeedback} dismiss={this.dismissFeedback} />
       </div>
     );
   }
 });
 
-React.renderComponent(
-  <Clustter />,
-  document.body
-);
+React.renderComponent(<Clustter />, document.body);

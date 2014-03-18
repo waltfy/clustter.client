@@ -10,13 +10,21 @@ $typeface = 'Open Sans', helvetica, arial, sans-serif
 
 // colors
 $type_dark = #595959
-$type_ligth = lighten($type_dark, 30%)
+$type_light = lighten($type_dark, 30%)
 
 $blue = #41b3d9
 $green = #2ecc40
 $yellow = #ffdc00
 $red = #ff4136
 $orange = #ff851b
+$black = #444444
+$purple = #6c368e
+
+$twitter = #55acee
+
+// functions
+prepareHeadline(color)
+  border-left 0.625em solid color
 
 // styles
 html, html a
@@ -47,6 +55,68 @@ body
   color $type_dark
   font-family $typeface
 
+.toggle
+  $frame = 170px;
+  $button = 40px;
+  $height = 40px;
+  margin 0.625em auto
+  width $frame
+  height $height
+  position relative
+  border-radius 3px
+  color #FFF
+  font-weight normal
+  overflow hidden
+  input
+     display none
+     &:checked ~ label
+      left -($frame - $button)
+  label
+    width: (2 * @width) - $button;
+    height $height
+    line-height: $height - 2
+    vertical-align middle;
+    border-radius: 1px;
+    position: absolute;
+    background-color #ccc
+    top: 0; 
+    left: 0; 
+    z-index: 1; 
+    font-size: 1.1em; 
+    cursor: pointer; 
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    b
+      display: block; 
+      height: $height; 
+      width: $button; 
+      float: left; 
+      position: relative; 
+      z-index: 1;
+      background: lighten($black, 70%);
+      border 2px solid lighten($black, 75%)
+      border-radius: 2px;
+      margin-top: 0px;
+  label::before
+    content 'Bullets'
+    width $frame - $button
+    height $height 
+    float left 
+    margin-top 00px 
+    text-align center 
+    background $blue
+    vertical-align middle
+  // label hover b
+  //   background #E5E5E5
+  label::after 
+    content 'Paragraphs'
+    width $frame - $button
+    height $height
+    float left
+    margin-top 00px
+    text-align center
+    background $green
+    vertical-align middle
+
 .app
   position absolute
   top 0
@@ -67,21 +137,32 @@ body
     line-height @height
     padding 0 1*0.625em
     vertical-align middle
+    &.danger
+      background-color $red
+    &.info
+      background-color $blue
+    &.success
+      background-color $green
+    &.warning
+      background-color $orange
     .fa
-      color darken(@background-color, 30%)
+      color rgba(0, 0, 0, 0.25)
       vertical-align middle
       font-size 1.4em
   .app__topbar
     position fixed
-    color $type_ligth
+    color $type_light
+    background-color white
     box-shadow 0px 2px 0px 0px rgba(50, 50, 50, 0.10)
     z-index 200
     top 0
     left 0
     right 0
-    background url('../images/clustter.svg') no-repeat center center white
-    background-size 1.4em
-    padding 1.1875em
+    font-size 1.3em
+    // background url('../images/clustter_alt.svg') no-repeat center center @background-color
+    background url('../images/clustter.svg') no-repeat center center @background-color
+    background-size 1.1em
+    padding 0.75em
     h1
       font-size 2em
   .app__content
@@ -90,33 +171,71 @@ body
     position relative
     top 3.75em
     z-index 0
+    .app__content--loading
+      padding 0.625em
+      text-align center
+      color lighten($type_dark, 75%)
+      font-size 2em
     .app__content--menu
       padding 0.625em
     .app__content--feed
       li
-        background-color white
-        color $type_ligth
         padding 0.625em
+        &.uk
+          prepareHeadline($red)
+        &.health
+          prepareHeadline($green)
+        &.global
+          prepareHeadline($type_dark)
+        &.business, &.finance
+          prepareHeadline($blue)
         &.entertainment
-          border-left 0.4em solid $red
-        &.world
-          border-left 0.4em solid $green
-        &.business
-          border-left 0.4em solid $blue
-        h2
-          color $type_dark
+          prepareHeadline($orange)
+        &.sports
+          prepareHeadline($yellow)
+        &.miscellaneous
+          prepareHeadline($purple)
+        // h2
+        //   color $type_dark
         small
           text-transform uppercase
           font-size 0.75em
     .app__content--story
+      article
+        padding 0.625em
+        header
+          h1
+            margin-bottom 0.625em
+        li
+          margin-bottom 0.625em
+      .share
+        text-align center
+        vertical-align middle
+        padding 0.625em
+        border-top 0.5*0.625em solid lighten($twitter, 10%)
+        border-bottom 0.5*0.625em solid lighten($twitter, 10%)
+        background-color $twitter
+        color white
+      .references
+        background-color $black
+        color white
+        word-wrap break-word
+        padding 0.625em
+    .app__content--retry
       padding 0.625em
-      border-left 0.6em solid $blue
+      color $type_light
+      text-align center
+      h1
+        line-height 0
+        text-shadow 0 1px 0 #bbb
+        font-size 6em
+        
   // footer
   //   overflow scroll-x
   //   padding 5*0.625em
   //   text-transform uppercase
   //   font-size 0.65em
-  //   color $type_ligth
+  //   color $type_light
   //   text-align center
 
 .right
@@ -124,6 +243,3 @@ body
 
 .left
   float left
-
-.fa.fa-twitter
-  color #55acee
