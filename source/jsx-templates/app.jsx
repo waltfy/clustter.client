@@ -35,7 +35,8 @@ var Retry = React.createClass({
   },
   render: function () {
     return (
-      <div className='app__content--retry' onClick={this.refresh}>
+      <div className='app__content--retry' onClick={this.refresh} onTouchEnd={this.refresh}>
+        <h2>{this.props.message}</h2>
         <h1><i className='fa fa-frown-o' /></h1>
         <p>Click here to try again.</p>
       </div>
@@ -64,14 +65,14 @@ var Feedback = React.createClass({
     var classes = React.addons.classSet({
       'app__feedback': true,
       'animated': true,
-      'fadeOutUpBig': !this.props.visible,
-      'fadeInDownBig': this.props.visible,
+      'bounceOutUp': !this.props.visible,
+      'bounceInDown': this.props.visible,
     });
 
     var message = this.props.message;
 
     return (
-      <div ref='feedback' className={classes + ' ' + message.className}>
+      <div className={classes + ' ' + message.className}>
         <p><i className={'fa ' + message.icon }></i>&nbsp;{message.text}<span onClick={this.props.dismiss} onTouchEnd={this.props.dismiss} className='right'><i className='fa fa-times'></i></span></p>
       </div>
     );
@@ -80,12 +81,14 @@ var Feedback = React.createClass({
 
 var Story = React.createClass({
   render: function () {
-
+    document.body.scrollTop = 0; // always bring it to the top of the story
     var story = this.props.story;
 
     var createSentence = function (sentence, index) {
-      if (this.props.bulleted)
-        return (<li key={index}>{sentence}</li>)
+      if (sentence === '')
+        return;
+      else if (this.props.bulleted)
+        return (<li key={index}>{sentence}</li>);
       else
         return (<p key={index}>{sentence}</p>);
     }.bind(this);
@@ -105,10 +108,12 @@ var Story = React.createClass({
           </header>
           {story.content.map(createSentence)}
         </article>
-        <div className='share'>
-          <p><i className='fa fa-twitter fa-2x'></i></p>
-          <h3>#getclustter</h3>
-        </div>
+        <a href={'https://twitter.com/intent/tweet?text="' + story.title + '", summary via @getclustter — &url=' + window.location} target='_blank'>
+          <div className='share'>
+            <p><i className='fa fa-twitter fa-2x'></i></p>
+            <h3>Share summary</h3>
+          </div>
+        </a>
         <div className='references'>
           <p><small><i className='fa fa-anchor'></i> REFERENCES</small></p>
           {story.refs.map(createRefs)}
@@ -135,7 +140,7 @@ var StoryFeed = React.createClass({
     var stories = this.props.stories;
     
     if (stories.length === 0)
-      return <Retry />
+      return <Retry message='No stories available.'/>
     else {
       return (
         <div className='app__content--feed animated fadeIn'>
@@ -151,7 +156,7 @@ var Clustter = React.createClass({
     var stories = this.state.stories;
     if (stories.length !== 0) { if (cb) cb(null, stories); return; } // if stories are already loaded there's no need to send another request
     this.setState({ isLoading: true }); // set status to loading
-    superagent.get('http://10.152.76.206:3000/stories').timeout(3000).end(function (err, res) {
+    superagent.get('http://192.168.0.3:3000/stories').timeout(3000).end(function (err, res) {
       this.setState({ isLoading: false });
       if (err) {
         this.handleFeedback(new ClustterError('Could not load stories.'));
@@ -194,7 +199,7 @@ var Clustter = React.createClass({
   },
   handleFeedback: function (message) {
     // activates feedback bar with a ClustterMessage - message
-    setTimeout(this.dismissFeedback, 5000);
+    setTimeout(this.dismissFeedback, 4200);
     this.setState({ feedbackContent: message, showFeedback: true});
   },
   dismissFeedback: function () { // dismisses feedback bar
