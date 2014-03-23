@@ -5,7 +5,6 @@
 /* globals React, Router, superagent */
 
 // if (navigator.standalone) document.body.className += 'touch';
-React.initializeTouchEvents(true);
 
 // function supportsLocalStorage () {
 //   try {
@@ -22,6 +21,8 @@ React.initializeTouchEvents(true);
 //   localStorage["clustter.stories"] = JSON.stringify(stories);
 //   return true;
 // };
+
+React.initializeTouchEvents(true);
 
 var app = app || {};
 
@@ -49,11 +50,14 @@ var Menu = React.createClass({
     return (
       <div className='app__content--menu animated fadeIn'>
         <h2>Reading Mode</h2>
-        <p>Shows your stories in bullet points or 'continuous' text.</p>
+        <p>Shows your stories in bullet points or paragraphs.</p>
         <div className='toggle'>
           <input type='checkbox' name="checkbox" id='chkbx' checked={this.props.bulleted} onChange={this.props.toggleBullet} />
           <label htmlFor='chkbx'><b></b></label>
         </div>
+        <footer>
+          <small>Developed and designed with <i className='fa fa-heart'></i> by <a target='_blank' href='http://www.twitter.com/waltercfilho'>WalterCarvalho</a></small>
+        </footer>
       </div>
     );
   }
@@ -62,14 +66,14 @@ var Menu = React.createClass({
 var Feedback = React.createClass({
   render: function () {
 
+    var message = this.props.message;
+
     var classes = React.addons.classSet({
       'app__feedback': true,
       'animated': true,
-      'bounceOutUp': !this.props.visible,
-      'bounceInDown': this.props.visible,
+      'fadeOutUpBig': !this.props.visible,
+      'fadeInDownBig': this.props.visible,
     });
-
-    var message = this.props.message;
 
     return (
       <div className={classes + ' ' + message.className}>
@@ -80,10 +84,14 @@ var Feedback = React.createClass({
 });
 
 var Story = React.createClass({
-  render: function () {
+  componentDidMount: function () {
     document.body.scrollTop = 0; // always bring it to the top of the story
-    var story = this.props.story;
+  },
+  render: function () {
+    
+    var story = this.props.story; // avoiding long name
 
+    // creates a sentence
     var createSentence = function (sentence, index) {
       if (sentence === '')
         return;
@@ -93,6 +101,7 @@ var Story = React.createClass({
         return (<p key={index}>{sentence}</p>);
     }.bind(this);
 
+    // creates each reference
     var createRefs = function (ref, index) {
       var link = document.createElement('a');
       link.href = ref;
@@ -108,10 +117,10 @@ var Story = React.createClass({
           </header>
           {story.content.map(createSentence)}
         </article>
-        <a href={'https://twitter.com/intent/tweet?text="' + story.title + '", summary via @getclustter — &url=' + window.location} target='_blank'>
+        <a href={'https://twitter.com/intent/tweet?text="' + story.title + '", via @getclustter — &url=' + window.location} target='_blank'>
           <div className='share'>
             <p><i className='fa fa-twitter fa-2x'></i></p>
-            <h3>Share summary</h3>
+            <h3>SHARE</h3>
           </div>
         </a>
         <div className='references'>
@@ -125,7 +134,10 @@ var Story = React.createClass({
 
 var StoryFeed = React.createClass({
   render: function () {
+
+    var stories = this.props.stories; 
     
+    // creates each story item
     var createStoryItem = function (item, index) {
       return (
         <a key={index} href={'#/story/' + index}>
@@ -136,8 +148,6 @@ var StoryFeed = React.createClass({
         </a>
       );
     }.bind(this);
-
-    var stories = this.props.stories;
     
     if (stories.length === 0)
       return <Retry message='No stories available.'/>
@@ -154,9 +164,10 @@ var StoryFeed = React.createClass({
 var Clustter = React.createClass({
   loadStories: function (cb) {
     var stories = this.state.stories;
+
     if (stories.length !== 0) { if (cb) cb(null, stories); return; } // if stories are already loaded there's no need to send another request
     this.setState({ isLoading: true }); // set status to loading
-    superagent.get('http://192.168.0.3:3000/stories').timeout(3000).end(function (err, res) {
+    superagent.get('http://192.168.0.13:3000/stories').timeout(3000).end(function (err, res) {
       this.setState({ isLoading: false });
       if (err) {
         this.handleFeedback(new ClustterError('Could not load stories.'));
@@ -170,6 +181,7 @@ var Clustter = React.createClass({
   },
   getInitialState: function () {
     return {
+      previous: null,
       nowShowing: app.HOME,
       isLoading: false,
       isBulleted: true,
@@ -183,7 +195,6 @@ var Clustter = React.createClass({
     var setState = this.setState;
     var router = Router({
       '/': [this.loadStories, setState.bind(this, { nowShowing: app.HOME })],
-      '/menu': setState.bind(this, { nowShowing: app.MENU }),
       '/story/:storyId': this.getStory
     });
     router.init('/');
@@ -194,8 +205,16 @@ var Clustter = React.createClass({
       this.setState({ selectedStory: stories[id], nowShowing: app.STORY });
     }.bind(this));
   },
-  toggleBullet: function (event) {
-    this.setState({ isBulleted: event.target.checked });
+  toggleBullet: function (e) {
+    this.setState({ isBulleted: e.target.checked });
+  },
+  toggleMenu: function (currentPage, e) {
+    if (currentPage === app.MENU) {
+      var previous = this.state.previous;
+      this.setState({ nowShowing: previous });
+    } else {
+      this.setState({ previous: currentPage, nowShowing: app.MENU });
+    }
   },
   handleFeedback: function (message) {
     // activates feedback bar with a ClustterMessage - message
@@ -227,8 +246,8 @@ var Clustter = React.createClass({
       <div className='app'>
         <div className='app__overlay'></div>
         <div className='app__topbar'>
-          {(this.state.nowShowing !== app.HOME) ? <a href='javascript:history.back()' className='animated fadeIn left'>BACK</a> : ''}
-          <a href='#/menu' className='right'><i className='fa fa-cog'></i></a>
+          {(this.state.nowShowing === app.STORY) ? <a href='/#' className='animated fadeIn left'><i className="fa fa-home"></i></a> : ''}
+          <i className='right fa fa-cog' onClick={this.toggleMenu.bind(this, this.state.nowShowing)} onTouchEnd={this.toggleMenu.bind(this, this.state.nowShowing)}></i>
         </div>
         <div className='app__content'>
           { (this.state.isLoading) ? <div className='app__content--loading animated fadeIn'><i className="fa fa-spinner fa-spin"></i></div> : getContent() }
