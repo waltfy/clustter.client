@@ -167,7 +167,7 @@
 
       if (stories.length !== 0) { if (cb) cb(null, stories); return; } // if stories are already loaded there's no need to send another request
       this.setState({ isLoading: true }); // set status to loading
-      superagent.get('http://localhost:5000/stories').timeout(3000).end(function (err, res) {
+      superagent.get('http://api.clustter.in/stories').timeout(3000).end(function (err, res) {
         this.setState({ isLoading: false });
         if (err) {
           this.handleFeedback(new ClustterError('Could not load stories.'));
