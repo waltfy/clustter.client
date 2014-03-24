@@ -99,5 +99,6 @@ module.exports = function (grunt) {
  
   // define the tasks
   grunt.registerTask('stylesheets', 'compiles all styles and autoprefixes them', [ 'stylus', 'autoprefixer' ]);
-  grunt.registerTask('default', 'Building Clustter', [ 'copy', /*'uglify',*/ 'stylesheets', 'react', 'connect', 'watch' ]);
+  grunt.registerTask('default', 'Running Clustter-Client Development Mode', [ 'copy', 'stylesheets', 'react', /*'connect',*/ 'watch' ]);
+  grunt.registerTask('build', 'Building Clustter', ['copy', 'stylesheets', 'react'/*, 'uglify'*/]);
 };

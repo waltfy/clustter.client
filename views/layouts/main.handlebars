@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- <html lang="en" manifest="/clustter.manifest" type="text/cache-manifest"> -->
+<html>
+  <head>
+
+    <title>Clustter</title>
+
+    <link href='/static/styles/clustter.css' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css' rel='stylesheet' type='text/css'/>
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+    <link rel="icon" href="/static/images/favicon.ico">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Apple Tags -->
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='apple-mobile-web-app-status-bar-style' content='black' />
+
+
+    <!-- Run in full-screen mode. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Make the status bar black with white text. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <!-- Customize home screen title. -->
+    <meta name="apple-mobile-web-app-title" content="Clustter" />
+
+    <!-- Disable phone number detection. -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="/static/images/ios/icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/ios/icon-72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/ios/icon@2x.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/ios/icon-72@2x.png" />
+
+    <!-- Startup images -->
+
+    <!-- iOS 6 & 7 iPad (retina, portrait) -->
+    <link href="/static/images/ios/splash-1536x2008.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+
+    <!-- iOS 6 & 7 iPad (retina, landscape) -->
+    <link href="/static/images/ios/splash-1496x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+
+    <!-- iOS 6 iPad (portrait) -->
+    <link href="/static/images/ios/splash-768x1004.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image" />
+
+    <!-- iOS 6 iPad (landscape) -->
+    <link href="/static/images/ios/splash-748x1024.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image" />
+
+    <!-- iOS 6 & 7 iPhone 5 -->
+    <link href="/static/images/ios/splash-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+
+    <!-- iOS 6 iPhone -->
+    <link href="/static/images/ios/splash-320x460.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image" />
+    
+  </head>
+  <body>
+    <div class="app">
+      <div class="app__topbar">
+        <a href='http://www.waltercarvalho.com/written/clustter'><i class="right fa fa-question-circle"></i></a>
+      </div>
+      <div class="app__content">
+        <noscript>
+          <div class="javascript-disabled">Clustter is better with JavaScript.</div>
+        </noscript>
+        {{{ body }}}
+      </div>
+    </div>
+  </body>
+  <script src='/static/libraries/director/build/director.min.js'></script>
+  <script src='/static/libraries/react/react-with-addons.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/superagent/0.15.7/superagent.min.js'></script>
+  <script src='/static/js/messages.js'></script>
+  <script src='/static/js/app.js'></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49330526-1', 'clustter.in');
+    ga('send', 'pageview');
+  </script>
+  <!-- <script src='http://localhost:35729/livereload.js'></script> -->
+</html>

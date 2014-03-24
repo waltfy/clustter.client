@@ -1,0 +1,22 @@
+<div class='app__content--story animated fadeIn'>
+  <article>
+    <header class={{getCategory story.category}}>
+      <h1>{{story.title}}</h1>
+    </header>
+    {{#each story.content}}
+      <li>{{this}}</li>
+    {{/each}}
+  </article>
+  <a href='https://twitter.com/intent/tweet?text="{{story.title}}", via @getclustter — &url={{window.location}}' target='_blank'>
+    <div class='share'>
+      <p><i class='fa fa-twitter fa-2x'></i></p>
+      <h3>SHARE</h3>
+    </div>
+  </a>
+  <div class='references'>
+    <p><small><i class='fa fa-anchor'></i> REFERENCES</small></p>
+    {{#each story.refs}}
+      <p><a target='_blank' href={{this}}>{{this}}</a></p>
+    {{/each}}
+  </div>
+</div>

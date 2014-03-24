@@ -122,6 +122,15 @@ body
     background $green
     vertical-align middle
 
+.javascript-disabled
+  width 100%
+  padding 0.3125em
+  font-size 0.9em
+  text-align center
+  color $red
+  background-color lighten($red, 90%)
+  border 0.2em solid lighten($red, 70%)
+
 .app
   position absolute
   top 0
@@ -251,12 +260,13 @@ body
     font-size 0.8em
     color $type_light
     text-align center
+    .fa-heart
+      color $red
+    .fa-twitter
+      color $twitter
     a
       color $blue
       border-bottom 1px dotted $blue
-
-.fa-heart
-  color: $red;
 
 .right
   float right

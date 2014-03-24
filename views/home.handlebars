@@ -1,0 +1,12 @@
+<div class="app__content--feed animated fadeIn">
+  <ul>
+    {{#each stories}}
+      <a href="/story/{{@index}}">
+        <li class={{getCategory this.category}}>
+          <small>{{this.category}}</small>
+          <h2>{{this.title}}</h2>
+        </li>
+      </a>
+    {{/each}}
+  </ul>
+</div>
