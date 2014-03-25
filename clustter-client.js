@@ -16,7 +16,7 @@ if (cluster.isMaster) {
       exphbs  = require('express3-handlebars'),
       http = require('http'),
       app = express(),
-      api = 'http://api.clustter.in/',
+      api = 'http://localhost:5000/',
       hbs = null;
 
   // handlebars config & helpers
