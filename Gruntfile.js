@@ -37,6 +37,7 @@ module.exports = function (grunt) {
         expand: true
       }
     },
+    clean: ['./build'],
     stylus: {
       compile: {
         files: {
@@ -61,7 +62,27 @@ module.exports = function (grunt) {
         ext: '.js'
       }
     },
-    
+    concat: {
+      dist: {
+        src: ['./build/js/messages.js', './build/js/app.js'],
+        dest: './build/js/clustter.js',
+      }
+    },
+    uglify: {
+      build: {
+        src: './build/js/clustter.js',
+        dest: './build/js/clustter.min.js'
+      }
+    },
+    cssmin: {
+      minify: {
+        expand: true,
+        cwd: './build/styles/',
+        src: ['*.css'],
+        dest: './build/styles/',
+        ext: '.min.css'
+      }
+    },
     watch: {
       styles: {
         files: './source/**/*.styl',
@@ -72,14 +93,14 @@ module.exports = function (grunt) {
       },
       react: {
         files: './source/**/*.jsx',
-        tasks: ['react'],
+        tasks: ['react', 'concat'],
         options: {
           livereload: true
         }
       },
       js: {
         files: './source/**/*.js',
-        tasks: ['copy:js'],
+        tasks: ['copy:js', 'concat'],
         options: {
           livereload: true
         }
@@ -99,6 +120,8 @@ module.exports = function (grunt) {
  
   // define the tasks
   grunt.registerTask('stylesheets', 'compiles all styles and autoprefixes them', [ 'stylus', 'autoprefixer' ]);
-  grunt.registerTask('default', 'Running Clustter-Client Development Mode', [ 'copy', 'stylesheets', 'react', /*'connect',*/ 'watch' ]);
-  grunt.registerTask('build', 'Building Clustter', ['copy', 'stylesheets', 'react'/*, 'uglify'*/]);
+  grunt.registerTask('dev', 'Running Clustter-Client Development Mode', [ 'clean', 'copy', 'stylesheets', 'react', 'concat', 'connect', 'watch' ]);
+  grunt.registerTask('build', 'Building Clustter-Client Production', [ 'clean', 'copy', 'stylesheets', 'react', 'concat', 'uglify', 'cssmin' ]);
+  grunt.registerTask('default', ['dev']);
+
 };

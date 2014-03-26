@@ -23,9 +23,11 @@ if (cluster.isMaster) {
   hbs = exphbs.create({
     defaultLayout: 'main',
     helpers: {
-      getCategory: function (category) { return category.split(' ')[0].toLowerCase(); }
+      getCategory: function (category) { return category.split(' ')[0].toLowerCase(); },
     }
   });
+
+  var isDev = (process.env.NODE_ENV === 'development');
 
   app.engine('handlebars', hbs.engine);
   app.set('view engine', 'handlebars');
@@ -33,18 +35,19 @@ if (cluster.isMaster) {
   app.use('/static', express.static(__dirname + '/build'));
 
   app.get('/', function (req, res) {
-    http.get(api + "stories", function (json) {
-      var body = '';
+    res.render('home', { isDev: isDev });
+    // http.get(api + "stories", function (json) {
+    //   var body = '';
 
-      json.on('data', function(chunk) {
-        body += chunk;
-      });
+    //   json.on('data', function(chunk) {
+    //     body += chunk;
+    //   });
 
-      json.on('end', function() {
-        var data = JSON.parse(body);
-        res.render('home', { stories: data.stories });
-      });
-    });
+    //   json.on('end', function() {
+    //     var data = JSON.parse(body);
+    //     res.render('home', { stories: data.stories, isDev: isDev });
+    //   });
+    // });
   });
 
   app.get('/story/:id', function (req, res) {
@@ -57,7 +60,7 @@ if (cluster.isMaster) {
 
       json.on('end', function() {
         var data = JSON.parse(body);
-        res.render('story', { story: data.story });
+        res.render('story', { story: data.story, isDev: isDev });
       });
     });
   });

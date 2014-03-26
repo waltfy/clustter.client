@@ -4,8 +4,11 @@
   <head>
 
     <title>Clustter</title>
-
-    <link href='/static/styles/clustter.css' rel='stylesheet' type='text/css' />
+    {{#if isDev}}
+      <link href='/static/styles/clustter.css' rel='stylesheet' type='text/css' />
+    {{else}}
+      <link href='/static/styles/clustter.min.css' rel='stylesheet' type='text/css' />
+    {{/if}}
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link href='http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css' rel='stylesheet' type='text/css'/>
     <link href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
@@ -75,15 +78,18 @@
   <script src='/static/libraries/react/react-with-addons.min.js'></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js'></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/superagent/0.15.7/superagent.min.js'></script>
-  <script src='/static/js/messages.js'></script>
-  <script src='/static/js/app.js'></script>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-49330526-1', 'clustter.in');
-    ga('send', 'pageview');
-  </script>
-  <!-- <script src='http://localhost:35729/livereload.js'></script> -->
+  {{#if isDev}}
+    <script src='/static/js/clustter.js'></script>
+    <script src='http://localhost:35729/livereload.js'></script>
+  {{else}}
+    <script src='/static/js/clustter.min.js'></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49330526-1', 'clustter.in');
+      ga('send', 'pageview');
+    </script>
+  {{/if}}
 </html>
