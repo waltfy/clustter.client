@@ -35,19 +35,18 @@ if (cluster.isMaster) {
   app.use('/static', express.static(__dirname + '/build'));
 
   app.get('/', function (req, res) {
-    res.render('home', { isDev: isDev });
-    // http.get(api + "stories", function (json) {
-    //   var body = '';
+    http.get(api + "stories", function (json) {
+      var body = '';
 
-    //   json.on('data', function(chunk) {
-    //     body += chunk;
-    //   });
+      json.on('data', function(chunk) {
+        body += chunk;
+      });
 
-    //   json.on('end', function() {
-    //     var data = JSON.parse(body);
-    //     res.render('home', { stories: data.stories, isDev: isDev });
-    //   });
-    // });
+      json.on('end', function() {
+        var data = JSON.parse(body);
+        res.render('home', { stories: data.stories, isDev: isDev });
+      });
+    });
   });
 
   app.get('/story/:id', function (req, res) {
