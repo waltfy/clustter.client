@@ -4,14 +4,14 @@ var cluster = require('cluster');
 if (cluster.isMaster) {
   // counting cpus
   var cpuCount = require('os').cpus().length;
-
+  process.title = 'clustter-client-master';
   // worker for each cpu
   for (var i = 0; i < cpuCount; i += 1) {
     cluster.fork();
   }
 
 } else {
-
+  process.title = 'clustter-client';
   var express = require('express');
       exphbs  = require('express3-handlebars'),
       http = require('http'),
