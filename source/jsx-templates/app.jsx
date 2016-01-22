@@ -90,7 +90,7 @@
       document.body.scrollTop = 0; // always bring it to the top of the story
     },
     render: function () {
-      
+
       var story = this.props.story; // avoiding long name
 
       // creates a sentence
@@ -107,7 +107,7 @@
       var createRefs = function (ref, index) {
         return (<p key={index}><a target='_blank' href={ref}>{ref}</a></p>);
       }.bind(this);
-      
+
       return (
         <div className='app__content--story animated fadeIn'>
           <article>
@@ -135,8 +135,8 @@
   var StoryFeed = React.createClass({
     render: function () {
 
-      var stories = this.props.stories; 
-      
+      var stories = this.props.stories;
+
       // creates each story item
       var createStoryItem = function (item, index) {
         return (
@@ -148,7 +148,7 @@
           </a>
         );
       }.bind(this);
-      
+
       if (stories.length === 0)
         return <Retry message='No stories available.'/>
       else {
@@ -167,7 +167,7 @@
 
       if (stories.length !== 0) { if (cb) cb(null, stories); return; } // if stories are already loaded there's no need to send another request
       this.setState({ isLoading: true }); // set status to loading
-      superagent.get('http://api.clustter.in/stories').timeout(3000).end(function (err, res) {
+      superagent.get('//clustter.waltfy.net/stories').timeout(3000).end(function (err, res) {
         this.setState({ isLoading: false });
         if (err) {
           this.handleFeedback(new ClustterError('Could not load stories.'));
@@ -176,7 +176,7 @@
           this.handleFeedback(new ClustterInformation('Loaded latest stories.'));
           this.setState({ stories: res.body.stories });
           if (cb) cb(err, res.body.stories);
-        } 
+        }
       }.bind(this));
     },
     getInitialState: function () {
@@ -222,7 +222,7 @@
       this.setState({ feedbackContent: message, showFeedback: true});
     },
     dismissFeedback: function () { // dismisses feedback bar
-      this.setState({ showFeedback: false }); 
+      this.setState({ showFeedback: false });
     },
     render: function () {
       var getContent = function () {
